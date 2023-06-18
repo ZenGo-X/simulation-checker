@@ -6,7 +6,7 @@ Following our Research regarding some potential issues with the way the simulati
 
 Simulation can easily exploited if it uses environment variables which are not valid on-chain, that way a malicous contract can detect whether malicous values are being submitted during simulation, detect if it runs under it and flip the behivour when running on-chain ([more info](https://zengo.com/zengo-uncovers-security-vulnerabilities-in-popular-web3-transaction-simulation-solutions-the-red-pill-attack/))
 
-## How to use
+## Verify your Simulation
 
 1. When deploying the contract, pass an ERC20 token address as a constructor argument, that will be the token that we'll use in order to debug the simulation
 2. Send some of the ERC20 token to the contract
@@ -14,6 +14,18 @@ Simulation can easily exploited if it uses environment variables which are not v
 3. Use the claim functions, if the simulation is valid, you won't get any ERC20 token back in favor, if the simulation is invalid, you'll get the ERC20 token back in favor of the ETH you submitted
 
 4. DO NOT submit any transaction on-chain
+
+## Debug your Simulation
+
+The owners of the SimulationChecker contract is able to debug the environment variables values of the simulation they use by calling the test functions, these functions simply returns the caller the value of the respective environment variable.
+
+For Example:
+
+`testBlockBasefee()` function will return the value of `block.basefee` environment variable of the deposited ERC-20 token
+
+### Improtant note
+
+its important that only the owner of the contract can call these funcitons (As in that repo), becuase if they would run on chain, the caller will actually get the deposited ERC-20 token back
 
 ## Example
 
